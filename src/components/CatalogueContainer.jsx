@@ -4,7 +4,10 @@ import { useState } from "react";
 import UserForm from "./UserForm";
 import Button from "../utils/Button";
 import UserDetails from "./UserDetails";
+import { useSelector } from "react-redux";
+
 function CatalogueContainer() {
+  const userDataList = useSelector((store) => store.user.userInfoList);
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>
@@ -16,8 +19,13 @@ function CatalogueContainer() {
           }}
           imgSrc={addPng}
         />
-
-        <UserDetails />
+        {userDataList?.map((userData) => (
+          <UserDetails
+            key={userData.userId}
+            setIsOpen={setIsOpen}
+            userData={userData}
+          />
+        ))}
       </div>
       <UserForm
         isOpen={isOpen}

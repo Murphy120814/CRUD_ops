@@ -3,8 +3,11 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import FormikControlComponent from "./FormikControlComponent";
 import { sexOptions } from "../../constant";
+import { useDispatch } from "react-redux";
+import { addInfo } from "../../slices/userInfoSlice";
 
 function FormikRootComponent({ handleClose }) {
+  const dispatch = useDispatch();
   const initialValues = {
     firstName: "",
     lastName: "",
@@ -33,6 +36,7 @@ function FormikRootComponent({ handleClose }) {
 
   const onSubmit = (values, onSubmitProps) => {
     console.log("formData", values);
+    dispatch(addInfo(values));
     onSubmitProps.resetForm();
     handleClose();
   };
