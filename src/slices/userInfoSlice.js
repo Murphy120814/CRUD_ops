@@ -3,6 +3,15 @@ import { createSlice } from "@reduxjs/toolkit";
 function privateIdGenerator() {
   let userId = 0;
   function addUserInfoWithId(state, action) {
+    if (state.populatedUserId !== null) {
+      state.userInfoList = state.userInfoList?.map(
+        (userInfo) =>
+          userInfo.userId === state.populateUserId && {
+            ...action.payload,
+            userId: userInfo.userId,
+          }
+      );
+    }
     state.userInfoList.push({ ...action.payload, userId: userId++ });
   }
   return addUserInfoWithId;
@@ -14,6 +23,8 @@ const userInfoSlice = createSlice({
   name: "userInfo",
   initialState: {
     userInfoList: [],
+    populatedUserId: null,
+    inViewMode: false,
   },
   reducers: {
     addInfo: addUserInfo,
@@ -24,8 +35,15 @@ const userInfoSlice = createSlice({
       );
       state.userInfoList = [...updatedList];
     },
+    populateUserId: (state, action) => {
+      state.populatedUserId = action.payload;
+    },
+    toggleViewMode: (state, action) => {
+      state.inViewMode = action.payload;
+    },
   },
 });
 
-export const { addInfo, removeUserInfo } = userInfoSlice.actions;
+export const { addInfo, removeUserInfo, populateUserId, toggleViewMode } =
+  userInfoSlice.actions;
 export default userInfoSlice.reducer;

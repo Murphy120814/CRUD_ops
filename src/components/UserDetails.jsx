@@ -5,7 +5,11 @@ import viewPng from "../assets/eye.png";
 import Button from "../utils/Button";
 import { useDispatch } from "react-redux";
 
-import { removeUserInfo } from "../slices/userInfoSlice";
+import {
+  removeUserInfo,
+  populateUserId,
+  toggleViewMode,
+} from "../slices/userInfoSlice";
 function UserDetails({ userData, setIsOpen }) {
   const dispatch = useDispatch();
   return (
@@ -16,9 +20,17 @@ function UserDetails({ userData, setIsOpen }) {
           imgSrc={editPng}
           onClick={() => {
             setIsOpen(true);
+            dispatch(populateUserId(userData.userId));
           }}
         />
-        <Button imgSrc={viewPng} onClick={() => {}} />
+        <Button
+          imgSrc={viewPng}
+          onClick={() => {
+            setIsOpen(true);
+            dispatch(populateUserId(userData.userId));
+            dispatch(toggleViewMode(true));
+          }}
+        />
         <Button
           imgSrc={deletePng}
           onClick={() => {

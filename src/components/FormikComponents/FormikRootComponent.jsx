@@ -5,9 +5,18 @@ import FormikControlComponent from "./FormikControlComponent";
 import { sexOptions } from "../../constant";
 import { useDispatch } from "react-redux";
 import { addInfo } from "../../slices/userInfoSlice";
+import { useSelector } from "react-redux";
 
 function FormikRootComponent({ handleClose }) {
   const dispatch = useDispatch();
+  const populatedUserId = useSelector((store) => store.user.populatedUserId);
+  const userInfoList = useSelector((store) => store.user.userInfoList);
+  const inViewMode = useSelector((store) => store.user.inViewMode);
+
+  const savedValue = userInfoList?.find(
+    (userInfo) => userInfo.userId === populatedUserId
+  );
+
   const initialValues = {
     firstName: "",
     lastName: "",
@@ -46,7 +55,7 @@ function FormikRootComponent({ handleClose }) {
       <Formik
         onSubmit={onSubmit}
         validationSchema={validationSchema}
-        initialValues={initialValues}
+        initialValues={savedValue || initialValues}
       >
         {(formik) => {
           return (
@@ -58,6 +67,7 @@ function FormikRootComponent({ handleClose }) {
                   type="text"
                   name="firstName"
                   placeholder="Prathmesh"
+                  disabled={inViewMode}
                 />
               </div>
               <div className="mb-2">
@@ -67,6 +77,7 @@ function FormikRootComponent({ handleClose }) {
                   type="text"
                   name="lastName"
                   placeholder="Vhatkar"
+                  disabled={inViewMode}
                 />
               </div>
               <div className="flex flex-col lg:flex-row gap-2  justify-between items-center ">
@@ -77,6 +88,7 @@ function FormikRootComponent({ handleClose }) {
                     type="number"
                     name="age"
                     placeholder="23"
+                    disabled={inViewMode}
                   />
                 </div>
                 <div className="w-full lg:w-6/12">
@@ -86,6 +98,7 @@ function FormikRootComponent({ handleClose }) {
                     options={sexOptions}
                     name="sex"
                     placeholder="Male"
+                    disabled={inViewMode}
                   />
                 </div>
               </div>
@@ -96,6 +109,7 @@ function FormikRootComponent({ handleClose }) {
                   type="text"
                   name="phoneNumber"
                   placeholder="9191919123"
+                  disabled={inViewMode}
                 />
               </div>
               <div className="mb-2">
@@ -105,15 +119,18 @@ function FormikRootComponent({ handleClose }) {
                   type="text"
                   name="roleInCompany"
                   placeholder="React Developer"
+                  disabled={inViewMode}
                 />
               </div>
-              <button
-                disabled={!(formik.isValid && formik.dirty)}
-                type="submit"
-                className="text-white bg-blue-700 hover:bg-black focus:ring-4 focus:outline-none focus:ring-emerald-300-300 font-medium rounded-lg text-sm w-full mt-2 sm:w-auto px-5 py-2.5 text-center disabled:opacity-20 disabled:bg-black"
-              >
-                Submit
-              </button>
+              {!inViewMode && (
+                <button
+                  disabled={!(formik.isValid && formik.dirty)}
+                  type="submit"
+                  className="text-white bg-blue-700 hover:bg-black focus:ring-4 focus:outline-none focus:ring-emerald-300-300 font-medium rounded-lg text-sm w-full mt-2 sm:w-auto px-5 py-2.5 text-center disabled:opacity-20 disabled:bg-black"
+                >
+                  Submit
+                </button>
+              )}
             </Form>
           );
         }}
