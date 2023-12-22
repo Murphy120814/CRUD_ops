@@ -1,6 +1,7 @@
 import React from "react";
 import { CatalogueContainer } from "./components/index";
 
+
 function App() {
   return (
     <div className="w-full  text-black p-4 border border-red-200 min-h-screen bg-emerald-200">
