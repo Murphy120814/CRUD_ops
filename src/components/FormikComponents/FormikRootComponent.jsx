@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import FormikControlComponent from "./FormikControlComponent";
 import { sexOptions } from "../../constant";
 import { useDispatch } from "react-redux";
-import { addInfo } from "../../slices/userInfoSlice";
+import { addInfo, populateUserId } from "../../slices/userInfoSlice";
 import { useSelector } from "react-redux";
 
 function FormikRootComponent({ handleClose }) {
@@ -46,6 +46,7 @@ function FormikRootComponent({ handleClose }) {
   const onSubmit = (values, onSubmitProps) => {
     console.log("formData", values);
     dispatch(addInfo(values));
+    //dispatch(populateUserId(null));
     onSubmitProps.resetForm();
     handleClose();
   };
@@ -55,8 +56,7 @@ function FormikRootComponent({ handleClose }) {
       <Formik
         onSubmit={onSubmit}
         validationSchema={validationSchema}
-        initialValues={savedValue || initialValues}
-      >
+        initialValues={savedValue || initialValues}>
         {(formik) => {
           return (
             <Form className=" w-9/12 mt-4 min-h-full flex flex-col gap-2 ">
@@ -94,7 +94,7 @@ function FormikRootComponent({ handleClose }) {
                 <div className="w-full lg:w-6/12">
                   <FormikControlComponent
                     control="select"
-                    label="Sex"
+                    label="Gender"
                     options={sexOptions}
                     name="sex"
                     placeholder="Male"
@@ -126,8 +126,7 @@ function FormikRootComponent({ handleClose }) {
                 <button
                   disabled={!(formik.isValid && formik.dirty)}
                   type="submit"
-                  className="text-white bg-blue-700 hover:bg-black focus:ring-4 focus:outline-none focus:ring-emerald-300-300 font-medium rounded-lg text-sm w-full mt-2 sm:w-auto px-5 py-2.5 text-center disabled:opacity-20 disabled:bg-black"
-                >
+                  className="text-white bg-blue-700 hover:bg-black focus:ring-4 focus:outline-none focus:ring-emerald-300-300 font-medium rounded-lg text-sm w-full mt-2 sm:w-auto px-5 py-2.5 text-center disabled:opacity-20 disabled:bg-black">
                   Submit
                 </button>
               )}

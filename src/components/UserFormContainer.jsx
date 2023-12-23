@@ -10,8 +10,8 @@ function UserFormContainer({ children, isOpen, handleClose }) {
   }
   return (
     <>
-      <div className="fixed inset-0 bg-black opacity-90 flex flex-col z-50 p-8 items-center justify-center">
-        <div className="w-6/12 rounded-lg min-h-full bg-emerald-400 mt-8 flex p-4 flex-col items-center">
+      <div className="absolute top-0 left-0 lg:top-16 md:top-1 w-full flex flex-col z-50 p-4 items-center justify-center">
+        <div className="w-full lg:w-6/12 rounded-lg min-h-full shadow-2xl shadow-black  bg-emerald-400 mt-4 flex p-4 pb-12 flex-col items-center">
           <Button
             className="self-end"
             onClick={() => {

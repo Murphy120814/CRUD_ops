@@ -7,9 +7,11 @@ function UserForm(props) {
   return (
     <>
       <ReactPortal wrapperId={"user_form"}>
-        <UserFormContainer {...props}>
-          <FormikRootComponent handleClose={handleClose} />
-        </UserFormContainer>
+        <div className="">
+          <UserFormContainer {...props}>
+            <FormikRootComponent handleClose={handleClose} />
+          </UserFormContainer>
+        </div>
       </ReactPortal>
     </>
   );

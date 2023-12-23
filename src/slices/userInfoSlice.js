@@ -4,15 +4,19 @@ function privateIdGenerator() {
   let userId = 0;
   function addUserInfoWithId(state, action) {
     if (state.populatedUserId !== null) {
-      state.userInfoList = state.userInfoList?.map(
-        (userInfo) =>
-          userInfo.userId === state.populateUserId && {
-            ...action.payload,
-            userId: userInfo.userId,
-          }
-      );
+      state.userInfoList = state.userInfoList?.map((userInfo) => {
+        console.log(userInfo.userId);
+        console.log(state.populatedUserId);
+        return userInfo.userId === state.populatedUserId
+          ? {
+              ...action.payload,
+              userId: userInfo.userId,
+            }
+          : userInfo;
+      });
+    } else {
+      state.userInfoList.push({ ...action.payload, userId: userId++ });
     }
-    state.userInfoList.push({ ...action.payload, userId: userId++ });
   }
   return addUserInfoWithId;
 }
